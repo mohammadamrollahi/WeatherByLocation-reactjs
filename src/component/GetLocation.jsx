@@ -3,7 +3,14 @@ import axios from 'axios'
 
 
     const GetLocation = () => {
-    const[weather,setWeather]=useState({
+    const[myWeather,setMyWeather]=useState({
+        city:'',
+        country:'',
+        temp:'',
+        icon:'',
+        status:'',
+        description:'',
+        humidity:'',
 
     })
     const apikey="appid=eb30e0f85a64d426cd77d65a96f11787"
@@ -30,12 +37,20 @@ import axios from 'axios'
             axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${myLocation.latitude}&lon=${myLocation.longitude}&&appid=eb30e0f85a64d426cd77d65a96f11787
 `)
                 .then(res=>{
-                    console.log(res.data)
+                    setMyWeather({
+                        city:res.data.name,
+                        country:res.data.sys.country,
+                        temp:res.data.main.temp,
+                        icon:res.data,
+                        status:res.data.weather[0].main,
+                        description:res.data.weather[0].description,
+                        humidity:res.data.main.humidity,
+                    })
                 })
         },[myLocation])
         return (
             <div>
-                <button onClick={()=>console.log(myLocation)}>click me</button>
+                <p>{myWeather.temp}</p>
             </div>
         );
     };
