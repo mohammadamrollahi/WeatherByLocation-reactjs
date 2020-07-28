@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
-import GetLocation from "./component/GetLocation";
+import GetLocation from "./component/GetLocation/GetLocation";
 import './App.css';
 
 function App() {

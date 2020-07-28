@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'
-
+import ShowWeather from '../ShowWeather/ShowWeather'
 
     const GetLocation = () => {
     const[myWeather,setMyWeather]=useState({
@@ -11,10 +11,9 @@ import axios from 'axios'
         status:'',
         description:'',
         humidity:'',
-
     })
-    const apikey="appid=eb30e0f85a64d426cd77d65a96f11787"
         const [myLocation,setmyLocation]=useState({})
+        const apikey='eb30e0f85a64d426cd77d65a96f11787'
         let promise = new Promise(function (resolve, reject) {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(position => {
@@ -33,25 +32,25 @@ import axios from 'axios'
 
         },[])
         useEffect(()=>{
-            console.log(myLocation)
-            axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${myLocation.latitude}&lon=${myLocation.longitude}&&appid=eb30e0f85a64d426cd77d65a96f11787
-`)
+            console.log(myLocation.longitude)
+            if(myLocation.latitude!=undefined)
+            axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${myLocation.latitude}&lon=${myLocation.longitude}&appid=${apikey}
+            `)
                 .then(res=>{
-                    setMyWeather({
-                        city:res.data.name,
-                        country:res.data.sys.country,
-                        temp:res.data.main.temp,
-                        icon:res.data,
-                        status:res.data.weather[0].main,
-                        description:res.data.weather[0].description,
-                        humidity:res.data.main.humidity,
-                    })
-                })
+                    console.log(res.data)
+                     setMyWeather({
+                         city:res.data.name,
+                         country:res.data.sys.country,
+                         temp:res.data.main.temp,
+                         icon:res.data,
+                         status:res.data.weather[0].main,
+                         description:res.data.weather[0].description,
+                         humidity:res.data.main.humidity,
+                     })
+                }).catch((e)=>console.log(e))
         },[myLocation])
         return (
-            <div>
-                <p>{myWeather.temp}</p>
-            </div>
+            <ShowWeather myWeather={myWeather}/>
         );
     };
 
