@@ -30,11 +30,11 @@ import ShowWeather from '../ShowWeather/ShowWeather'
                 setmyLocation(obj)
             },(e)=>alert(e))
 
-        },[])
+        })
         useEffect(()=>{
             console.log(myLocation.longitude)
             if(myLocation.latitude!=undefined)
-            axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${myLocation.latitude}&lon=${myLocation.longitude}&appid=${apikey}
+            axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${myLocation.latitude}&lon=${myLocation.longitude}&appid=${apikey}
             `)
                 .then(res=>{
                     console.log(res.data)
@@ -42,7 +42,7 @@ import ShowWeather from '../ShowWeather/ShowWeather'
                          city:res.data.name,
                          country:res.data.sys.country,
                          temp:res.data.main.temp,
-                         icon:res.data,
+                         icon:res.data.weather[0].icon,
                          status:res.data.weather[0].main,
                          description:res.data.weather[0].description,
                          humidity:res.data.main.humidity,
